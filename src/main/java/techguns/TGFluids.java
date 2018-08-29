@@ -32,13 +32,13 @@ public class TGFluids implements ITGInitializer {
 	
 	public static Fluid MILK;
 	
-	protected static String[] oilnames = {"oil", "tree_oil", "crude_oil"};
+	protected static String[] oilnames = {"oil", "tree_oil", "crude_oil", "fluidoil"};
 	public static ArrayList<Fluid> oils = new ArrayList<Fluid>();
 	
 	//public static Fluid OIL;
 	
 	//public static Fluid FUEL;
-	protected static String[] fuelnames = {"fuel", "refined_fuel", "biofuel", "biodiesel", "diesel", "gasoline"};
+	protected static String[] fuelnames = {"fuel", "refined_fuel", "biofuel", "biodiesel", "diesel", "gasoline", "fluiddiesel", "fluidnitrodiesel", "fliudnitrofuel"};
 	public static ArrayList<Fluid> fuels = new ArrayList<Fluid>();
 	
 	public static Fluid LIQUID_REDSTONE;
