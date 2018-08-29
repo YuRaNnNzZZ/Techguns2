@@ -13,7 +13,13 @@ public class SlotFood extends Slot {
 
 	@Override
 	public boolean isItemValid(ItemStack item) {
-		return item.getItem() instanceof ItemFood;
+		if (item.getItem() instanceof ItemFood) {
+			ItemFood food = (ItemFood) item.getItem();
+
+			return food.getHealAmount(item) > 0 || food.getSaturationModifier(item) > 0;
+		}
+
+		return false;
 	}	
 	
 	@Override

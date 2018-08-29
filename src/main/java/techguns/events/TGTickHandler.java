@@ -14,6 +14,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
@@ -24,6 +25,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -66,12 +68,7 @@ public class TGTickHandler {
 	private static final UUID UUID_SPEED = UUID.fromString("5D8E53EB-DCFA-4121-B4DB-99BCAFA6B70B");
 	private static final UUID UUID_HEALTH = UUID.fromString("4CFA49EB-D215-498B-9CC9-4BD0D1350B1F");
 	private static final UUID UUID_KNOCKBACK_RESISTANCE = UUID.fromString("3441FC5D-F0B6-47F4-AFBB-DC5005670254");
-	
-	private static Method ITEMFOOD_onFoodEaten;
-	static {
-		ITEMFOOD_onFoodEaten = ReflectionHelper.findMethod(ItemFood.class,"onFoodEaten","func_77849_c", ItemStack.class, World.class, EntityPlayer.class);
-	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void localClientPlayerTick(PlayerTickEvent event) {
@@ -376,60 +373,37 @@ public class TGTickHandler {
 			 /** 
 			  * Auto feeder
 			  */
-			 if (!TGConfig.disableAutofeeder && event.player.getFoodStats().getFoodLevel()<=19){
-				 
-				 if (props!=null){
-					 int needed = 20-event.player.getFoodStats().getFoodLevel();
-					 if (props.foodleft>0){
-						 if (props.foodleft<=needed){
-							 event.player.getFoodStats().addStats(props.foodleft,props.lastSaturation);
-							 props.foodleft=0;
-							 props.lastSaturation=0.0f;
-						 } else {
-							 event.player.getFoodStats().addStats(needed,props.lastSaturation);
-							 props.foodleft-=needed;
-						 }
-						 if (!event.player.world.isRemote){
-							 TGPackets.network.sendTo(new PacketTGExtendedPlayerSync(event.player,props,true), (EntityPlayerMP) event.player);
-						 }
-					 } else {
-						 ItemStack stack = InventoryUtil.consumeFood(props.tg_inventory.inventory, props.tg_inventory.SLOTS_AUTOFOOD_START, props.tg_inventory.SLOTS_AUTOFOOD_END+1);
-						 if (!stack.isEmpty()){
-							 ItemFood food = (ItemFood) stack.getItem();
-							 
-							 //check potion effect.
-							 try {
-								ITEMFOOD_onFoodEaten.invoke(food, stack, event.player.world,event.player);
-							} catch (IllegalAccessException e) {
-								e.printStackTrace();
-							} catch (IllegalArgumentException e) {
-								e.printStackTrace();
-							} catch (InvocationTargetException e) {
-								e.printStackTrace();
+			if (!TGConfig.disableAutofeeder && event.player.getFoodStats().needFood()){
+				for (int i = props.tg_inventory.SLOTS_AUTOFOOD_START; i <= props.tg_inventory.SLOTS_AUTOFOOD_END; i++ ) {
+					ItemStack stack = props.tg_inventory.getStackInSlot(i);
+
+					if (!stack.isEmpty() && stack.getItem() instanceof ItemFood) {
+						ItemStack result = stack.onItemUseFinish(event.player.world, event.player);
+						result = ForgeEventFactory.onItemUseFinish(event.player, stack, 0, result);
+
+						if (!result.isEmpty()) {
+							if (result.getItem() instanceof ItemFood) {
+								props.tg_inventory.setInventorySlotContents(i, result);
+							} else {
+								props.tg_inventory.setInventorySlotContents(i, ItemStack.EMPTY);
+
+								if (event.player.addItemStackToInventory(result)) {
+									event.player.inventoryContainer.detectAndSendChanges();
+								} else {
+									EntityItem drop = event.player.dropItem(result, false);
+
+									if (drop != null) {
+										drop.setNoPickupDelay();
+										drop.setOwner(event.player.getName());
+									}
+								}
 							}
-							 
-							 if (!event.player.world.isRemote){
-								 //event.player.world.playSoundAtEntity(event.player, SoundEvents.ENTITY_PLAYER_BURP, 1.0f, 1.0f);
-								 event.player.world.playSound(null, event.player.posX, event.player.posY, event.player.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 1f, 1f);
-							 }
-							 
-							 short left = (short) (food.getHealAmount(stack)-needed);
-							 if (left >0){
-								 event.player.getFoodStats().addStats(needed, food.getSaturationModifier(stack));
-								 props.foodleft=left;
-								 props.lastSaturation=food.getSaturationModifier(stack);
-							 } else {
-								 event.player.getFoodStats().addStats(food.getHealAmount(stack), food.getSaturationModifier(stack));
-								 props.foodleft=0;
-								 props.lastSaturation=0.0f;
-							 }
-							 if (!event.player.world.isRemote){
-								 TGPackets.network.sendTo(new PacketTGExtendedPlayerSync(event.player,props,true), (EntityPlayerMP) event.player);
-							 }
-						 }
-					 }
-				 }
-			 }
+
+							break;
+						}
+					}
+				}
+			}
 			 
 			 /**
 			  * Tick addition slots
