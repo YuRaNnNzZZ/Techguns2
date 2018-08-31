@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.nbt.*;
 import org.lwjgl.input.Keyboard;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
@@ -25,7 +26,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
@@ -43,6 +43,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import techguns.TGConfig;
 import techguns.TGItems;
 import techguns.TGPackets;
 import techguns.TGSounds;
@@ -836,10 +837,19 @@ public class GenericGun extends GenericItem implements IGenericGun, IItemTGRende
 		NBTTagCompound tags = stack.getTagCompound();
 		tags.setShort("ammo", (short) (ammo+amount));
 	}
-	
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		if (this.isInCreativeTab(tab)){
+		if (!isInCreativeTab(tab)) return;
+
+		if (TGConfig.cl_camoItemsInCreative) {
+			for (int i = 0; i < getCamoCount(); i++) {
+				ItemStack gun = new ItemStack(this, 1, 0);
+				this.onCreated(gun, null, null);
+				gun.setTagInfo("camo", new NBTTagByte((byte) i));
+
+				items.add(gun);
+			}
+		} else {
 			ItemStack gun = new ItemStack(this, 1,0);
 			this.onCreated(gun, null, null);
 			items.add(gun);

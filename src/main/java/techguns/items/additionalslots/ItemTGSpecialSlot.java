@@ -5,14 +5,18 @@ import java.util.List;
 import com.mojang.realmsclient.gui.ChatFormatting;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import techguns.TGConfig;
 import techguns.Techguns;
 import techguns.api.tginventory.ITGSpecialSlot;
 import techguns.api.tginventory.TGSlotType;
@@ -94,6 +98,23 @@ public abstract class ItemTGSpecialSlot extends GenericItem implements ITGSpecia
 			}
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
+	}
+
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if (!isInCreativeTab(tab)) return;
+
+		if (TGConfig.cl_camoItemsInCreative) {
+			for (int i = 0; i < getCamoCount(); i++) {
+				ItemStack special = new ItemStack(this, 1, 0);
+				this.onCreated(special, null, null);
+				special.setTagInfo("camo", new NBTTagByte((byte) i));
+
+				items.add(special);
+			}
+		} else {
+			super.getSubItems(tab, items);
+		}
 	}
 
 }

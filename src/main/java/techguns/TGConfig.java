@@ -28,6 +28,8 @@ public class TGConfig {
 	
 	public static boolean cl_enableDeathFX;
 	public static boolean cl_enableDeathFX_Gore;
+
+	public static boolean cl_camoItemsInCreative;
 	
 	public static boolean disableAutofeeder;
 	public static boolean machinesNeedNoPower;
@@ -196,6 +198,8 @@ public class TGConfig {
 		cl_fixedSprintFov = config.getFloat("FixedSprintFovMultiplier", CLIENTSIDE, 1.15f, 1.0f, 10.0f, "Multiply the FOV while sprinting by this value independent from the actual speed, has no effect when LockSpeedDependantFov is false, pure clientside check.");
 		
 		cl_sortPassesPerTick = config.getInt("ParticleDepthSortPasses", CLIENTSIDE, 10, 0, 20, "How many bubble sort passes should be performed each tick on particles. 0=off. Clientside");
+
+		cl_camoItemsInCreative = config.getBoolean("AddItemsWithCamoToCreative", CLIENTSIDE, true, "Add camouflaged items to creative inventory? Clientside.");
 
 		fluidListFuel = config.getStringList("FluidListFuel", "Fluid Recipes", new String[]{"fuel", "refined_fuel", "biofuel", "biodiesel", "diesel", "gasoline", "fluiddiesel", "fluidnitrodiesel", "fliudnitrofuel"}, "Fluids that can be used to fill up Fuel Canisters");
 		fluidListOil = config.getStringList("FluidListOil", "Fluid Recipes", new String[]{"oil", "tree_oil", "crude_oil", "fluidoil"}, "Fluids that can be used to make resin from logs");

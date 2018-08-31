@@ -3,6 +3,9 @@ package techguns.items.armors;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.nbt.NBTTagByte;
+import net.minecraft.util.NonNullList;
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -17,6 +20,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import techguns.TGConfig;
 import techguns.Techguns;
 import techguns.util.TextUtil;
 
@@ -131,7 +135,24 @@ public class GenericArmorMultiCamo extends GenericArmor implements ICamoChangeab
 			tags.setByte("camo", (byte)camo);		
 			return armor;
 		}
-		
+
+		@Override
+		public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+			if (!isInCreativeTab(tab)) return;
+			if (TGConfig.cl_camoItemsInCreative) {
+				for (int i = 0; i < getCamoCount(); i++) {
+					//items.add(getNewWithCamo(this, i));
+					ItemStack armor = new ItemStack(this, 1, 0);
+					this.onCreated(armor, null, null);
+					armor.setTagInfo("camo", new NBTTagByte((byte) i));
+
+					items.add(armor);
+				}
+			} else {
+				super.getSubItems(tab, items);
+			}
+		}
+
 		@Override
 		public void onCreated(ItemStack stack, World world, EntityPlayer player) {
 			super.onCreated(stack, world, player);
