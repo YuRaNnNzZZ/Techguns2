@@ -79,7 +79,7 @@ public class BlockTGDoor2x1 extends BlockDoor implements IGenericBlock {
             worldIn.setBlockState(blockpos, state, 10);
             worldIn.markBlockRangeForRenderUpdate(blockpos, pos);
             //worldIn.playEvent(playerIn, ((Boolean)state.getValue(OPEN)).booleanValue() ? this.getOpenSound() : this.getCloseSound(), pos, 0);
-            worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), TGSounds.BUNKER_DOOR_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f, false);
+            worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), iblockstate.getValue(OPEN).booleanValue() ? TGSounds.BUNKER_DOOR_OPEN : TGSounds.BUNKER_DOOR_CLOSE, SoundCategory.BLOCKS, 1.0f, 1.0f, false);
             return true;
         }
         

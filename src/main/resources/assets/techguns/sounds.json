@@ -572,7 +572,16 @@
     "sounds": [
         "techguns:blocks/metaldoor_open_a",
         "techguns:blocks/metaldoor_open_b",
-        "techguns:blocks/metaldoor_open_c"     
+        "techguns:blocks/metaldoor_open_c"
+    ]
+},
+
+"blocks.metaldoorclose": {
+    "category": "block",
+    "sounds": [
+        "techguns:blocks/metaldoor_open_a",
+        "techguns:blocks/metaldoor_open_b",
+        "techguns:blocks/metaldoor_open_c"
     ]
 },
 

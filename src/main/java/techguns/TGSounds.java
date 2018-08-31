@@ -196,6 +196,7 @@ public class TGSounds {
 	public static SoundEvent HELICOPTER_EXPLODE = createSoundEvent("npcs.apacheexplode");
 	
 	public static SoundEvent BUNKER_DOOR_OPEN = createSoundEvent("blocks.metaldooropen");
+	public static SoundEvent BUNKER_DOOR_CLOSE = createSoundEvent("blocks.metaldoorclose");
 	
 	public static SoundEvent NUKE_EXPLOSION = createSoundEvent("effects.nukeexplosion");
 	
