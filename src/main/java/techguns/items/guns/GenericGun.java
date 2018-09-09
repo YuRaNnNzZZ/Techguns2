@@ -790,7 +790,12 @@ public class GenericGun extends GenericItem implements IGenericGun, IItemTGRende
 		if(tags==null){
 			this.onCreated(stack, null, null); //world and player are not needed
 			tags = stack.getTagCompound();
+		} else if (stack.getItemDamage() > 0) {
+			tags.setShort("ammo", (short)(this.clipsize - stack.getItemDamage()));
+
+			stack.setItemDamage(0);
 		}
+
 		return tags.getShort("ammo");
 	}
 	
