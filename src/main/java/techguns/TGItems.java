@@ -376,17 +376,17 @@ public class TGItems implements ITGInitializer{
 		TREATED_LEATHER = SHARED_ITEM.addsharedVariant("treatedleather");
 		ORE_TITANIUM = SHARED_ITEM.addsharedVariant("oretitanium");
 		
-		INGOT_COPPER = SHARED_ITEM.addsharedVariantOptional("ingotcopper",TGConfig.addCopperIngots);
-		INGOT_TIN = SHARED_ITEM.addsharedVariantOptional("ingottin",TGConfig.addTinIngots);
-		INGOT_BRONZE = SHARED_ITEM.addsharedVariantOptional("ingotbronze",TGConfig.addBronzeIngots);
-		INGOT_LEAD = SHARED_ITEM.addsharedVariantOptional("ingotlead",TGConfig.addLeadIngots);
-		INGOT_STEEL = SHARED_ITEM.addsharedVariantOptional("ingotsteel",TGConfig.addSteelIngots);
+		INGOT_COPPER = SHARED_ITEM.addsharedVariant("ingotcopper");
+		INGOT_TIN = SHARED_ITEM.addsharedVariant("ingottin");
+		INGOT_BRONZE = SHARED_ITEM.addsharedVariant("ingotbronze");
+		INGOT_LEAD = SHARED_ITEM.addsharedVariant("ingotlead");
+		INGOT_STEEL = SHARED_ITEM.addsharedVariant("ingotsteel");
 		INGOT_OBSIDIAN_STEEL = SHARED_ITEM.addsharedVariant("ingotobsidiansteel");
 		INGOT_TITANIUM = SHARED_ITEM.addsharedVariant("ingottitanium");
 		
-		NUGGET_COPPER = SHARED_ITEM.addsharedVariantOptional("nuggetcopper",TGConfig.addCopperNuggets);
-		NUGGET_LEAD = SHARED_ITEM.addsharedVariantOptional("nuggetlead", TGConfig.addLeadNuggets);
-		NUGGET_STEEL = SHARED_ITEM.addsharedVariantOptional("nuggetsteel", TGConfig.addSteelNuggets);
+		NUGGET_COPPER = SHARED_ITEM.addsharedVariant("nuggetcopper");
+		NUGGET_LEAD = SHARED_ITEM.addsharedVariant("nuggetlead");
+		NUGGET_STEEL = SHARED_ITEM.addsharedVariant("nuggetsteel");
 		
 		GAS_MASK_FILTER = SHARED_ITEM.addsharedVariant("gasmaskfilter");
 		GLIDER_BACKBACK = SHARED_ITEM.addsharedVariant("gliderbackpack");
@@ -524,7 +524,7 @@ public class TGItems implements ITGInitializer{
 		}
 	}
 	
-	
+
 	public static ItemStack newStack(ItemStack stack, int size) {
 		ItemStack ret = stack.copy();
 		ret.setCount(size);
@@ -545,7 +545,7 @@ public class TGItems implements ITGInitializer{
 	}
 
 	public static void registerItemsToOreDict() {
-		 registerIfEnabled("ingotObsidianSteel", INGOT_OBSIDIAN_STEEL); 
+		 registerIfEnabled("ingotObsidianSteel", INGOT_OBSIDIAN_STEEL);
 		 
 		 registerIfEnabled("plateIron", PLATE_IRON);
 		 registerIfEnabled("plateTin", PLATE_TIN);
@@ -585,7 +585,7 @@ public class TGItems implements ITGInitializer{
 		if (SHARED_ITEM.get(item.getItemDamage()).isEnabled()) {
 			OreDictionary.registerOre(oreName, item);
 		}
-		
+
 	}
 	public static boolean isMachineUpgrade(ItemStack stack) {
 		return !stack.isEmpty() && stack.getItem()==SHARED_ITEM && stack.getItemDamage()==MACHINE_UPGRADE_STACK.getItemDamage();

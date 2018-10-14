@@ -11,15 +11,6 @@ public class TGConfig {
 	public static Configuration config;
 	
 	public static boolean debug;
-	
-	public static boolean addCopperIngots;
-	public static boolean addLeadNuggets;
-	public static boolean addCopperNuggets;
-	public static boolean addBronzeIngots;
-	public static boolean addTinIngots;
-	public static boolean addLeadIngots;
-	public static boolean addSteelIngots;
-	public static boolean addSteelNuggets;
 
 	public static boolean keepLavaRecipesWhenFuelIsPresent;
 
@@ -95,8 +86,6 @@ public class TGConfig {
 	/**
 	 * CATEGORIES
 	 */
-	private static final String CATEGORY_ENABLING_ITEMS = "Disable Items";
-	
 	public static final String CLIENTSIDE = "Clientside";
 	private static final String ID_CONFLICTS = "ID Conflicts";
 	private static final String WORLDGEN="World Generation";
@@ -122,18 +111,6 @@ public class TGConfig {
 
 		addPlateRecipes = config.getBoolean("addPlateRecipes", Configuration.CATEGORY_GENERAL, true, "Enable generating recipes for Plates in Metal Press.");
 
-		addCopperIngots = config.getBoolean("addCopperIngot", CATEGORY_ENABLING_ITEMS, true, "Add copper ingots.");
-		addCopperNuggets = config.getBoolean("addCopperNugget", CATEGORY_ENABLING_ITEMS, true, "Add copper nuggets.");
-		addTinIngots = config.getBoolean("addTinIngot", CATEGORY_ENABLING_ITEMS, true, "Add tin ingots.");
-		addBronzeIngots = config.getBoolean("addBronzeIngot", CATEGORY_ENABLING_ITEMS, true, "Add bronze ingots.");
-		
-		addLeadIngots = config.getBoolean("addLeadIngot", CATEGORY_ENABLING_ITEMS, true, "Add lead ingots.");
-		addLeadNuggets = config.getBoolean("addLeadNugget", CATEGORY_ENABLING_ITEMS, true, "Add Lead nuggets.");
-		
-		addSteelIngots = config.getBoolean("addSteelIngot", CATEGORY_ENABLING_ITEMS, true, "Adds Steel ingots.");
-		addSteelNuggets = config.getBoolean("addSteelNugget", CATEGORY_ENABLING_ITEMS, true, "Adds Steel nuggets.");
-	
-		
 		distanceSpawnLevel0 = config.getInt("DistanceSpawnLevel0", "NPC Spawn", 500, 0, Integer.MAX_VALUE, "Up to which distance to worldspawn only mobs with danger level up to 0 will spawn");
 		distanceSpawnLevel1 = config.getInt("DistanceSpawnLevel1", "NPC Spawn", 1000, 0, Integer.MAX_VALUE, "Up to which distance to worldspawn only mobs with danger level up to 1 will spawn");
 		distanceSpawnLevel2 = config.getInt("DistanceSpawnLevel2", "NPC Spawn", 2500, 0, Integer.MAX_VALUE, "Up to which distance to worldspawn only mobs with danger level up to 2 will spawn");
