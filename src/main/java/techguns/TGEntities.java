@@ -138,20 +138,29 @@ public class TGEntities implements ITGInitializer {
 	
 	@Override
 	public void init(FMLInitializationEvent event) {
+		if (TGConfig.spawnWeightZombieSoldier > 0)
+			TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieSoldier.class, TGConfig.spawnWeightZombieSoldier), 1);
 
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieSoldier.class, TGConfig.spawnWeightZombieSoldier), 1);
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieFarmer.class, TGConfig.spawnWeightZombieFarmer), 0);
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieMiner.class, TGConfig.spawnWeightZombieMiner), 0);
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(SkeletonSoldier.class, TGConfig.spawnWeightSkeletonSoldier), 1);
-		
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(PsychoSteve.class, TGConfig.spawnWeightPsychoSteve), 1);
-		
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(Bandit.class, TGConfig.spawnWeightBandit), 2);
-		
-		
-		TGSpawnManager.spawnTableNether.registerSpawn(new TGNpcSpawn(ZombiePigmanSoldier.class, TGConfig.spawnWeightZombiePigmanSoldier), 0);
-		TGSpawnManager.spawnTableNether.registerSpawn(new TGNpcSpawn(CyberDemon.class, TGConfig.spawnWeightCyberDemon), 0);
-		
+		if (TGConfig.spawnWeightZombieFarmer > 0)
+			TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieFarmer.class, TGConfig.spawnWeightZombieFarmer), 0);
+
+		if (TGConfig.spawnWeightZombieMiner > 0)
+			TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieMiner.class, TGConfig.spawnWeightZombieMiner), 0);
+
+		if (TGConfig.spawnWeightSkeletonSoldier > 0)
+			TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(SkeletonSoldier.class, TGConfig.spawnWeightSkeletonSoldier), 1);
+
+		if (TGConfig.spawnWeightPsychoSteve > 0)
+			TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(PsychoSteve.class, TGConfig.spawnWeightPsychoSteve), 1);
+
+		if (TGConfig.spawnWeightBandit > 0)
+			TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(Bandit.class, TGConfig.spawnWeightBandit), 2);
+
+		if (TGConfig.spawnWeightZombiePigmanSoldier > 0)
+			TGSpawnManager.spawnTableNether.registerSpawn(new TGNpcSpawn(ZombiePigmanSoldier.class, TGConfig.spawnWeightZombiePigmanSoldier), 0);
+
+		if (TGConfig.spawnWeightCyberDemon > 0)
+			TGSpawnManager.spawnTableNether.registerSpawn(new TGNpcSpawn(CyberDemon.class, TGConfig.spawnWeightCyberDemon), 0);
 	}
 
 	@Override
@@ -166,9 +175,11 @@ public class TGEntities implements ITGInitializer {
 			}
 		});
 
-		EntityRegistry.addSpawn(TGDummySpawn.class, TGConfig.spawnWeightTGOverworld, 1, 3, EnumCreatureType.MONSTER,overworldBiomes.toArray(new Biome[overworldBiomes.size()]));
-			
-		EntityRegistry.addSpawn(TGDummySpawn.class, TGConfig.spawnWeightTGNether, 1, 3, EnumCreatureType.MONSTER,netherBiomes.toArray(new Biome[netherBiomes.size()]));
+		if (TGConfig.spawnWeightTGOverworld > 0)
+			EntityRegistry.addSpawn(TGDummySpawn.class, TGConfig.spawnWeightTGOverworld, 1, 3, EnumCreatureType.MONSTER,overworldBiomes.toArray(new Biome[overworldBiomes.size()]));
+
+		if (TGConfig.spawnWeightTGNether > 0)
+			EntityRegistry.addSpawn(TGDummySpawn.class, TGConfig.spawnWeightTGNether, 1, 3, EnumCreatureType.MONSTER,netherBiomes.toArray(new Biome[netherBiomes.size()]));
 		
 	}
 
