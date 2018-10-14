@@ -46,24 +46,54 @@ public class TGMachineRecipes {
 		AmmoPressBuildPlans.init(metal1, metal2, powders);
 		
 		//METAL PRESS
-		MetalPressRecipes.addRecipe("ingotSteel", new ItemStack(Blocks.OBSIDIAN,1), TGItems.newStack(TGItems.INGOT_OBSIDIAN_STEEL,1), true);
-		MetalPressRecipes.addRecipe("ingotTin","ingotTin",TGItems.newStack(TGItems.PLATE_TIN,2), true);
-		MetalPressRecipes.addRecipe("ingotCopper","ingotCopper",TGItems.newStack(TGItems.PLATE_COPPER,2), true);
-		MetalPressRecipes.addRecipe("ingotBronze","ingotBronze",TGItems.newStack(TGItems.PLATE_BRONZE,2), true);
-		MetalPressRecipes.addRecipe("ingotIron","ingotIron",TGItems.newStack(TGItems.PLATE_IRON,2), true);
-		MetalPressRecipes.addRecipe("ingotSteel","ingotSteel",TGItems.newStack(TGItems.PLATE_STEEL,2), true);
-		MetalPressRecipes.addRecipe("ingotLead","ingotLead",TGItems.newStack(TGItems.PLATE_LEAD,2), true);
+		MetalPressRecipes.addRecipe("ingotSteel", "obsidian", TGItems.newStackByOreDict("ingotObsidianSteel", 1), true);
+
+		// Plates
+		MetalPressRecipes.addRecipe("ingotTin","ingotTin", TGItems.newStackByOreDict("plateTin", 2), true);
+		MetalPressRecipes.addRecipe("ingotCopper","ingotCopper", TGItems.newStackByOreDict("plateCopper", 2), true);
+		MetalPressRecipes.addRecipe("ingotBronze","ingotBronze", TGItems.newStackByOreDict("plateBronze", 2), true);
+		MetalPressRecipes.addRecipe("ingotIron","ingotIron", TGItems.newStackByOreDict("plateIron", 2), true);
+		MetalPressRecipes.addRecipe("ingotSteel","ingotSteel", TGItems.newStackByOreDict("plateSteel", 2), true);
+		MetalPressRecipes.addRecipe("ingotLead","ingotLead", TGItems.newStackByOreDict("plateLead", 2), true);
+		MetalPressRecipes.addRecipe("ingotObsidianSteel", "ingotObsidianSteel", TGItems.newStackByOreDict("plateObsidianSteel", 2), true);
+		MetalPressRecipes.addRecipe("ingotTitanium","ingotTitanium", TGItems.newStackByOreDict("plateTitanium", 2), true);
+
+		for (String entryName : OreDictionary.getOreNames()) {
+			if (entryName.startsWith("plate")) {
+				ItemStack result = TGItems.newStackByOreDict(entryName, 2);
+
+				if (MetalPressRecipes.getRecipesFor(result) != null) {
+					continue;
+				}
+
+				String ingotOreName = entryName.replaceFirst("^plate", "ingot");
+
+				if (ItemUtil.existsInOredict(ingotOreName) && ItemUtil.existsInOredict(entryName.replaceFirst("^plate", "nugget"))) {
+					MetalPressRecipes.addRecipe(ingotOreName, ingotOreName, TGItems.newStackByOreDict(entryName, 2), true);
+				}
+			}
+		}
+
+		MetalPressRecipes.addRecipe("fiberCarbon", "fiberCarbon", TGItems.newStack(TGItems.PLATE_CARBON, 2), true);
+		MetalPressRecipes.addRecipe("plateSteel", "plateBronze", TGItems.newStack(TGItems.STEAMARMOR_PLATE, 1), true);
+
+		// Wires
+		MetalPressRecipes.addRecipe("plateCopper", "plateCopper", TGItems.newStackByOreDict("wireCopper", 8), true);
+
+		if (ItemUtil.existsInOredict("plateGold")) {
+			MetalPressRecipes.addRecipe("plateGold", "plateGold", TGItems.newStackByOreDict("wireGold", 8), true);
+		} else {
+			MetalPressRecipes.addRecipe("ingotGold", "ingotGold", TGItems.newStackByOreDict("wireGold", 2), true);
+		}
+
+		// Mechanical Parts
 		MetalPressRecipes.addRecipe("plateIron", new ItemStack(Items.FLINT,1), TGItems.newStack(TGItems.MECHANICAL_PARTS_IRON, 1), true);
 		MetalPressRecipes.addRecipe("plateObsidianSteel", "gemQuartz", TGItems.newStack(TGItems.MECHANICAL_PARTS_OBSIDIAN_STEEL, 1), true);
 		MetalPressRecipes.addRecipe("plateCarbon", new ItemStack(Items.BLAZE_ROD), TGItems.newStack(TGItems.MECHANICAL_PARTS_CARBON, 2), true);
-		MetalPressRecipes.addRecipe("plateCopper", "plateCopper", TGItems.newStack(TGItems.WIRE_COPPER, 8), true);
-		MetalPressRecipes.addRecipe("fiberCarbon", "fiberCarbon", TGItems.newStack(TGItems.PLATE_CARBON, 2), true);
+
+		// Ammo
 		MetalPressRecipes.addRecipe("plateObsidianSteel", TGItems.newStack(TGItems.TGX, 1), TGItems.newStack(TGItems.ADVANCED_ROUNDS, 16), true);
-		MetalPressRecipes.addRecipe("ingotObsidianSteel", "ingotObsidianSteel", TGItems.newStack(TGItems.PLATE_OBSIDIAN_STEEL, 2), true);
-		MetalPressRecipes.addRecipe("plateSteel", "plateBronze", TGItems.newStack(TGItems.STEAMARMOR_PLATE, 1), true);
-		MetalPressRecipes.addRecipe("ingotGold", "ingotGold", TGItems.newStack(TGItems.WIRE_GOLD, 2), true);
 		MetalPressRecipes.addRecipe("plateIron", new ItemStack(Blocks.TNT,1), TGItems.newStack(TGItems.GRENADE_40MM, 16), true);
-		MetalPressRecipes.addRecipe("ingotTitanium","ingotTitanium",TGItems.newStack(TGItems.PLATE_TITANIUM,2), true);
 		MetalPressRecipes.addRecipe("plateObsidianSteel","plateTitanium",TGItems.newStack(TGItems.GAUSSRIFLE_SLUGS,4), true);
 		
 		//CHEM LAB

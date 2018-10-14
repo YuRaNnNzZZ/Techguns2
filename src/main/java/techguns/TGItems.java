@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
@@ -528,6 +529,19 @@ public class TGItems implements ITGInitializer{
 		ItemStack ret = stack.copy();
 		ret.setCount(size);
 		return ret;
+	}
+
+	public static ItemStack newStackByOreDict(String oreDictEntryName, int size) {
+		NonNullList<ItemStack> entries = OreDictionary.getOres(oreDictEntryName);
+
+		if (entries.size() > 0) {
+			ItemStack result = entries.get(0).copy();
+			result.setCount(size);
+
+			return result;
+		}
+
+		return ItemStack.EMPTY;
 	}
 
 	public static void registerItemsToOreDict() {

@@ -22,6 +22,8 @@ public class TGConfig {
 	public static boolean addSteelNuggets;
 
 	public static boolean keepLavaRecipesWhenFuelIsPresent;
+
+	public static boolean addPlateRecipes;
 	
 	public static boolean cl_lockSpeedFov;
 	public static float cl_fixedSprintFov;
@@ -117,7 +119,9 @@ public class TGConfig {
 		machinesNeedNoPower = config.getBoolean("machinesNeedNoPower", config.CATEGORY_GENERAL, false, "Machines don't need power, activate this if you don't want to install a mod with generators and still be able to use the machines");
 		
 		keepLavaRecipesWhenFuelIsPresent = config.getBoolean("keepLavaRecipesWhenFuelIsPresent", config.CATEGORY_GENERAL, false, "Keep recipes with lava instead of fuel even when fuel is present. Fuels need to be added by other mods");
-			
+
+		addPlateRecipes = config.getBoolean("addPlateRecipes", Configuration.CATEGORY_GENERAL, true, "Enable generating recipes for Plates in Metal Press.");
+
 		addCopperIngots = config.getBoolean("addCopperIngot", CATEGORY_ENABLING_ITEMS, true, "Add copper ingots.");
 		addCopperNuggets = config.getBoolean("addCopperNugget", CATEGORY_ENABLING_ITEMS, true, "Add copper nuggets.");
 		addTinIngots = config.getBoolean("addTinIngot", CATEGORY_ENABLING_ITEMS, true, "Add tin ingots.");
