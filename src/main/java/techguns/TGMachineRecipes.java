@@ -80,7 +80,16 @@ public class TGMachineRecipes {
 		// Wires
 		MetalPressRecipes.addRecipe("plateCopper", "plateCopper", TGItems.newStackByOreDict("wireCopper", 8), true);
 
-		if (ItemUtil.existsInOredict("plateGold")) {
+		boolean hasGoldPlateOutput = false;
+
+		for (ItemStack plateGold : OreDictionary.getOres("plateGold")) {
+			if (MetalPressRecipes.getRecipesFor(plateGold) != null) {
+				hasGoldPlateOutput = true;
+				break;
+			}
+		}
+
+		if (hasGoldPlateOutput) {
 			MetalPressRecipes.addRecipe("plateGold", "plateGold", TGItems.newStackByOreDict("wireGold", 8), true);
 		} else {
 			MetalPressRecipes.addRecipe("ingotGold", "ingotGold", TGItems.newStackByOreDict("wireGold", 2), true);
