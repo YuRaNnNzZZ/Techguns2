@@ -42,11 +42,11 @@ public class GenericItemShared extends GenericItem implements IItemTGRenderer, I
 	}
 	
 	public ItemStack addsharedVariant(String name, boolean useRenderHack, TGSlotType slottype){
-		return addsharedVariant(name, useRenderHack,slottype,64,true);
+		return addsharedVariant(name, useRenderHack,slottype,0,true);
 	}
 	
 	public ItemStack addsharedVariantOptional(String name, boolean enabled) {
-		return this.addsharedVariant(name, false, TGSlotType.NORMAL, 64, enabled);
+		return this.addsharedVariant(name, false, TGSlotType.NORMAL, 0, enabled);
 	}
 	
 	public ItemStack addsharedVariant(String name, boolean useRenderHack, TGSlotType slottype, int maxStackSize, boolean enabled){
@@ -54,15 +54,15 @@ public class GenericItemShared extends GenericItem implements IItemTGRenderer, I
 		sharedItems.add(new SharedItemEntry(name, newMeta, slottype, (short)maxStackSize, useRenderHack, enabled));
 		return new ItemStack(this,1,newMeta);
 	}
-	
-	
-	
+
 	@Override
 	public int getItemStackLimit(ItemStack stack) {
 		int dmg = stack.getItemDamage();
-		if (dmg <this.sharedItems.size()) {
-			return this.sharedItems.get(dmg).maxStackSize;
+
+		if (dmg < this.sharedItems.size() && this.sharedItems.get(dmg).getMaxStackSize() > 0) {
+			return this.sharedItems.get(dmg).getMaxStackSize();
 		}
+
 		return super.getItemStackLimit(stack);
 	}
 
@@ -73,7 +73,7 @@ public class GenericItemShared extends GenericItem implements IItemTGRenderer, I
 	public static class SharedItemEntry {
 		protected String name;
 		protected TGSlotType slottype;
-		protected short maxStackSize;
+		protected short maxStackSize = 0;
 		protected int meta;
 		protected boolean useRenderHack;
 		protected boolean enabled;
